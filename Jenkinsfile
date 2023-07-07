@@ -15,7 +15,7 @@ pipeline {
     stage('AWS Credentials') {
         steps {
             withAWS(credentials: 'AWS-KEY', region: 'ap-northeast-2') {
-                sh 'aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 728156710202.dkr.ecr.ap-northeast-2.amazonaws.com/app-back'
+                sh 'aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 728156710202.dkr.ecr.ap-northeast-2.amazonaws.com/dash-back'
             }
         }
     }
@@ -26,7 +26,7 @@ pipeline {
       }
     }
 
-    stage('Push') {
+    stage('ECR Push') {
         steps {
             sh 'docker push 728156710202.dkr.ecr.ap-northeast-2.amazonaws.com/dash-back:v$buildNumber'
         }
