@@ -15,13 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c*t1o7))5521nqn@j*8+umm@3&h&)s2d$#gk4be=#d@&r!8^^1'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -38,8 +31,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'price',
     'corsheaders',
+    'rest_framework',
+    'django_apscheduler',
+    'scheduler',
 ]
+
+# rest_framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES' : [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
+
+# django_apscheduler
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+SCHEDULER_DEFAULT = True
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -83,7 +91,7 @@ DATABASES = {
         'USER': os.environ['DB_USER'],
         'PASSWORD': os.environ['DB_PW'],
         'HOST': os.environ['DB_HOST'],
-        'PORT': '3306',
+        'PORT': os.environ['DB_PORT'],
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
         }
