@@ -42,7 +42,7 @@ pipeline {
             sh "git add back/deployment.yaml"
             sh "git commit -m 'Update Image Tag $buildNumber'"
             withCredentials([gitUsernamePassword(credentialsId: 'github-token-cykim', gitToolName: 'Default')]) {
-                    sh 'git push origin master'
+                    sh 'git push origin main'
             }
         }
     }
