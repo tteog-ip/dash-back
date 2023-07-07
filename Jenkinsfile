@@ -34,11 +34,11 @@ pipeline {
 
     stage('Change Tag in GitHub') {
         steps{
-                git branch: 'master', url: 'https://github.com/tteog-ip/app-argocd'
-                dir('front') {
-                  sh 'sed -i "s/image:.*$/image: 728156710202.dkr.ecr.ap-northeast-2.amazonaws.com\\/app-front:v$BuildNumber/g" deployment.yaml'
+                git branch: 'master', url: 'https://github.com/tteog-ip/dash-argocd'
+                dir('back') {
+                  sh 'sed -i "s/image:.*$/image: 728156710202.dkr.ecr.ap-northeast-2.amazonaws.com\\/dash-back:v$buildNumber/g" deployment.yaml'
                   sh 'git add -u'
-                  sh 'git commit -m "Update Image Tag - v$BuildNumber"'
+                  sh 'git commit -m "Update Image Tag - v$buildNumber"'
                   withCredentials([gitUsernamePassword(credentialsId: 'github-token-cykim', gitToolName: 'Default')]) {
                       sh 'git push origin master'
                 }
