@@ -3,7 +3,7 @@
 # ELB -> 전송한 네트워크 트래픽의 양 GB 를 가져올 수가 없음
 # ECR -> ELB 랑 같은 이유
 # S3 -> 있다고 해야 하나 ?
-
+from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 import boto3, json
 from datetime import datetime, timedelta
 from botocore.config import Config
@@ -15,11 +15,16 @@ my_config = Config(
     }
 )
 
-ec2 = boto3.client('ec2')
-eks = boto3.client('eks')
-es = boto3.client('opensearch')
-rds = boto3.client('rds')
-pricelist = boto3.client('pricing', config=my_config)
+auth = boto3.Session(
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+)
+
+ec2 = auth.client('ec2')
+eks = auth.client('eks')
+es = auth.client('opensearch')
+rds = auth.client('rds')
+pricelist = auth.client('pricing', config=my_config)
 
 def CostEC2():
     # 현재 사용하고 있는 EC2 instance ID & Type 조회 -> 단가 조회 (PriceList)

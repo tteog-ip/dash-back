@@ -22,7 +22,7 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
-        sh 'docker build -t 728156710202.dkr.ecr.ap-northeast-2.amazonaws.com/dash-back:v$buildNumber .'
+        sh 'docker system prune -f && docker build --force-rm --no-cache --tag 728156710202.dkr.ecr.ap-northeast-2.amazonaws.com/dash-back:v$buildNumber .'
       }
     }
 
@@ -36,7 +36,7 @@ pipeline {
         steps {
             git credentialsId: 'jenkins-github2',
                 url: 'https://github.com/tteog-ip/dash-argocd',
-                branch: 'master'
+                branch: 'main'
 
             sh "sed -i 's#728156710202.dkr.ecr.ap-northeast-2.amazonaws.com/dash-back:v.*#728156710202.dkr.ecr.ap-northeast-2.amazonaws.com/dash-back:v$buildNumber#g' back/deployment.yaml"
             sh "git add back/deployment.yaml"
