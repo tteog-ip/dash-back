@@ -33,16 +33,15 @@ pipeline {
     }
 
     stage('Change Tag in GitHub') {
-        steps {
-            git credentialsId: 'jenkins-github2',
-                url: 'https://github.com/tteog-ip/dash-argocd',
-                branch: 'master'
-
-            sh "sed -i 's#728156710202.dkr.ecr.ap-northeast-2.amazonaws.com/dash-back:v.*#728156710202.dkr.ecr.ap-northeast-2.amazonaws.com/dash-back:v$buildNumber#g' back/deployment.yaml"
-            sh "git add back/deployment.yaml"
-            sh "git commit -m 'Update Image Tag $buildNumber'"
-            withCredentials([gitUsernamePassword(credentialsId: 'github-token-cykim', gitToolName: 'Default')]) {
-                    sh 'git push origin master'
+        steps{
+                git branch: 'master', url: 'https://github.com/tteog-ip/app-argocd'
+                dir('front') {
+                  sh 'sed -i "s/image:.*$/image: 728156710202.dkr.ecr.ap-northeast-2.amazonaws.com\\/app-front:v$BuildNumber/g" deployment.yaml'
+                  sh 'git add -u'
+                  sh 'git commit -m "Update Image Tag - v$BuildNumber"'
+                  withCredentials([gitUsernamePassword(credentialsId: 'github-token-cykim', gitToolName: 'Default')]) {
+                      sh 'git push origin master'
+                }
             }
         }
     }
