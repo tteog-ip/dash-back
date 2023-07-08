@@ -3,7 +3,7 @@
 # ELB -> 전송한 네트워크 트래픽의 양 GB 를 가져올 수가 없음
 # ECR -> ELB 랑 같은 이유
 # S3 -> 있다고 해야 하나 ?
-from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION
 import boto3, json
 from datetime import datetime, timedelta
 from botocore.config import Config
