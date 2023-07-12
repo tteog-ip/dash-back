@@ -148,7 +148,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://a80a2d936c7744d0eb43e85bcdb034f9-1650486775.ap-northeast-2.elb.amazonaws.com/',
+    'http://a80a2d936c7744d0eb43e85bcdb034f9-1650486775.ap-northeast-2.elb.amazonaws.com',
     'http://dash.tteogip.com',
     # Add more allowed origins if needed
 ]
